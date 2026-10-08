@@ -1,10 +1,39 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Reserva
 from .forms import ReservaForm
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 
+def iniciar_sesion(request):
+    mensaje = None
+
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        usuario = authenticate(
+            request,
+            username=username,
+            password=password
+        )
+
+        if usuario is not None:
+            login(request, usuario)
+            return redirect('inicio')
+        else:
+            mensaje = 'Usuario o contraseña incorrectos.'
+
+    return render(
+        request,
+        'reservas/login.html',
+        {'mensaje': mensaje}
+    )
+
+@login_required    
 def inicio(request):
     return render(request, 'reservas/inicio.html')
 
+@login_required
 def lista_reservas(request):
     reservas = Reserva.objects.all()
     return render(
@@ -13,7 +42,7 @@ def lista_reservas(request):
         {'reservas': reservas}
     )
 
-
+@login_required
 def crear_reserva(request):
     if request.method == 'POST':
         form = ReservaForm(request.POST)
@@ -30,7 +59,7 @@ def crear_reserva(request):
         {'form': form}
     )
 
-
+@login_required
 def editar_reserva(request, id):
     reserva = get_object_or_404(Reserva, id=id)
 
@@ -49,7 +78,7 @@ def editar_reserva(request, id):
         {'form': form, 'reserva': reserva}
     )
 
-
+@login_required
 def eliminar_reserva(request, id):
     reserva = get_object_or_404(Reserva, id=id)
 
