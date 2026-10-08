@@ -1,33 +1,225 @@
 {% extends 'reservas/base.html' %}
 
-{% block title %}Iniciar sesión{% endblock %}
+{% block title %}Iniciar sesión | Hotel para Mascotas{% endblock %}
 
 {% block content %}
 
-<h1>Iniciar sesión</h1>
+<style>
+    .login-box {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        min-height: 500px;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+    }
 
-{% if mensaje %}
-    <p style="color: red; font-weight: bold;">
-        {{ mensaje }}
-    </p>
-{% endif %}
+    .login-presentacion {
+        background: linear-gradient(145deg, #245957, #4f8f8c);
+        color: white;
+        padding: 55px 45px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        position: relative;
+    }
 
-<form method="POST">
-    {% csrf_token %}
+    .login-presentacion::after {
+        content: "🐾";
+        position: absolute;
+        right: 20px;
+        bottom: -10px;
+        font-size: 150px;
+        opacity: 0.08;
+        transform: rotate(-15deg);
+    }
 
-    <p>
-        <label for="username">Usuario:</label>
-        <input type="text" name="username" id="username" required>
-    </p>
+    .login-iconos {
+        font-size: 45px;
+        margin-bottom: 15px;
+    }
 
-    <p>
-        <label for="password">Contraseña:</label>
-        <input type="password" name="password" id="password" required>
-    </p>
+    .login-presentacion h1 {
+        color: white;
+        font-size: 38px;
+        margin: 0 0 15px;
+    }
 
-    <button type="submit">
-        Ingresar
-    </button>
-</form>
+    .login-presentacion p {
+        font-size: 17px;
+        line-height: 1.7;
+        margin: 7px 0;
+        max-width: 420px;
+    }
+
+    .login-form {
+        background: white;
+        padding: 55px 45px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .login-form h2 {
+        color: #2f6f6d;
+        font-size: 32px;
+        margin: 0;
+    }
+
+    .login-subtitulo {
+        color: #7c8a8a;
+        margin: 8px 0 30px;
+    }
+
+    .campo-login {
+        margin-bottom: 20px;
+    }
+
+    .campo-login label {
+        display: block;
+        font-weight: bold;
+        color: #365f5e;
+        margin-bottom: 8px;
+    }
+
+    .campo-login input {
+        width: 100%;
+        padding: 14px 15px;
+        border: 1px solid #d3dddd;
+        border-radius: 12px;
+        font-size: 16px;
+        background: #f9fbfb;
+    }
+
+    .campo-login input:focus {
+        border-color: #4f8f8c;
+        box-shadow: 0 0 0 3px rgba(79, 143, 140, 0.15);
+        outline: none;
+        background: white;
+    }
+
+    .boton-ingresar {
+        width: 100%;
+        padding: 14px;
+        margin-top: 5px;
+        font-size: 16px;
+        border-radius: 12px;
+    }
+
+    .error-login {
+        background: #fff0f0;
+        color: #b83d3d;
+        border-left: 4px solid #d95858;
+        padding: 12px 14px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+    }
+
+    .login-detalle {
+        text-align: center;
+        color: #99a3a3;
+        font-size: 13px;
+        margin-top: 25px;
+    }
+
+    @media (max-width: 750px) {
+        .login-box {
+            grid-template-columns: 1fr;
+        }
+
+        .login-presentacion {
+            padding: 35px 25px;
+        }
+
+        .login-form {
+            padding: 35px 25px;
+        }
+
+        .login-presentacion h1 {
+            font-size: 30px;
+        }
+    }
+</style>
+
+
+<div class="login-box">
+
+    <section class="login-presentacion">
+
+        <div class="login-iconos">
+            🐶 🐱 🐾
+        </div>
+
+        <h1>Bienvenidos</h1>
+
+        <p>
+            Gestiona las reservas de nuestros huéspedes de cuatro patas
+            de manera simple y segura.
+        </p>
+
+        <p>
+            💚 Cuidado, cariño y comodidad para cada mascota.
+        </p>
+
+    </section>
+
+
+    <section class="login-form">
+
+        <h2>Iniciar sesión</h2>
+
+        <p class="login-subtitulo">
+            Ingresa tus datos para acceder al sistema
+        </p>
+
+        {% if mensaje %}
+            <div class="error-login">
+                ⚠️ {{ mensaje }}
+            </div>
+        {% endif %}
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+            <div class="campo-login">
+                <label for="username">👤 Usuario</label>
+
+                <input
+                    type="text"
+                    id="username"
+                    name="username"
+                    placeholder="Ej: Emilia"
+                    required
+                >
+            </div>
+
+
+            <div class="campo-login">
+                <label for="password">🔒 Contraseña</label>
+
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    placeholder="Ingresa tu contraseña"
+                    required
+                >
+            </div>
+
+
+            <button type="submit" class="boton-ingresar">
+                🐾 Ingresar
+            </button>
+
+        </form>
+
+        <div class="login-detalle">
+            Hotel para Mascotas · Sistema de Reservas
+        </div>
+
+    </section>
+
+</div>
 
 {% endblock %}
