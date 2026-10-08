@@ -1,0 +1,66 @@
+{% extends 'reservas/base.html' %}
+
+{% block title %}Inicio | Hotel para Mascotas{% endblock %}
+
+{% block content %}
+
+<section style="text-align: center; padding: 40px 20px;">
+
+    <h1 style="font-size: 3rem; margin-bottom: 15px;">
+        🐾 Bienvenidos al Hotel para Mascotas
+    </h1>
+
+    <p style="font-size: 1.2rem; color: #666; max-width: 700px; margin: 0 auto 40px;">
+        Un espacio pensado para gestionar de manera simple y ordenada
+        las reservas, estadías y servicios de nuestras mascotas.
+    </p>
+
+    <div style="
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 25px;
+        max-width: 850px;
+        margin: auto;
+    ">
+
+        <div style="
+            background: #f8f8ff;
+            padding: 30px;
+            border-radius: 14px;
+            border: 1px solid #ddd;
+        ">
+            <h2>📋 Gestionar reservas</h2>
+
+            <p>
+                Consulta, modifica o elimina las reservas registradas
+                en el sistema.
+            </p>
+
+            <a class="boton" href="{% url 'lista_reservas' %}">
+                Ver reservas
+            </a>
+        </div>
+
+        <div style="
+            background: #f8f8ff;
+            padding: 30px;
+            border-radius: 14px;
+            border: 1px solid #ddd;
+        ">
+            <h2>➕ Nueva reserva</h2>
+
+            <p>
+                Registra una nueva estadía para una mascota
+                de forma rápida y sencilla.
+            </p>
+
+            <a class="boton" href="{% url 'crear_reserva' %}">
+                Crear reserva
+            </a>
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

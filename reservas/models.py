@@ -15,3 +15,7 @@ class Reserva(models.Model):
 
     def __str__(self):
         return f"{self.nombre_mascota} - {self.nombre_dueno}"
+    
+    @property
+    def precio_formateado(self):
+        return f"${self.precio:,.0f}".replace(",", ".") 

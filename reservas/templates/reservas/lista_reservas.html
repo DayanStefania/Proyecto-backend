@@ -1,0 +1,52 @@
+{% extends 'reservas/base.html' %}
+
+{% block title %}Reservas | Hotel para Mascotas{% endblock %}
+
+{% block content %}
+
+<h1>Reservas del Hotel para Mascotas</h1>
+
+<a class="boton" href="{% url 'crear_reserva' %}">
+    + Crear nueva reserva
+</a>
+
+{% if reservas %}
+
+    {% for reserva in reservas %}
+
+        <div class="reserva">
+
+            <h3>🐾 {{ reserva.nombre_mascota }}</h3>
+
+            <p><strong>Dueño:</strong> {{ reserva.nombre_dueno }}</p>
+            <p><strong>Tipo de mascota:</strong> {{ reserva.tipo_mascota }}</p>
+            <p><strong>Entrada:</strong> {{ reserva.fecha_entrada }}</p>
+            <p><strong>Salida:</strong> {{ reserva.fecha_salida }}</p>
+            <p><strong>Servicio:</strong> {{ reserva.servicio }}</p>
+            <p><strong>Precio:</strong> {{ reserva.precio_formateado }}</p>
+
+            <div class="acciones">
+
+                <a class="boton"
+                    href="{% url 'editar_reserva' reserva.id %}">
+                    Editar
+                </a>
+
+                <a class="boton boton-eliminar"
+                    href="{% url 'eliminar_reserva' reserva.id %}">
+                    Eliminar
+                </a>
+
+            </div>
+
+        </div>
+
+    {% endfor %}
+
+{% else %}
+
+    <p>No hay reservas registradas.</p>
+
+{% endif %}
+
+{% endblock %}
