@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -120,21 +121,36 @@
 
 <body>
 
-<header>
-    <nav>
-        <h2>🐾 Hotel para Mascotas</h2>
+    <header>
+        <nav>
+            <h2>🐾 Hotel para Mascotas</h2>
 
-        <div>
-            <a href="{% url 'inicio' %}">Inicio</a>
-            <a href="{% url 'lista_reservas' %}">Reservas</a>
-        </div>
-    </nav>
-</header>
+            <div>
+                {% if user.is_authenticated %}
+                <a href="{% url 'inicio' %}">Inicio</a>
+                <a href="{% url 'lista_reservas' %}">Reservas</a>
 
-<main>
-    {% block content %}
-    {% endblock %}
-</main>
+                <span style="margin-left: 20px;">
+                    👤 {{ user.username }}
+                </span>
+
+                <a href="{% url 'logout' %}" style="margin-left: 20px;">
+                    Cerrar sesión
+                </a>
+                {% else %}
+                <a href="{% url 'login' %}">
+                    Iniciar sesión
+                </a>
+                {% endif %}
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
 
 </body>
+
 </html>
