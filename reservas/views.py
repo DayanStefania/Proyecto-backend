@@ -3,6 +3,7 @@ from .models import Reserva
 from .forms import ReservaForm
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.cache import never_cache
 
 def iniciar_sesion(request):
     mensaje = None
@@ -28,11 +29,17 @@ def iniciar_sesion(request):
         'reservas/login.html',
         {'mensaje': mensaje}
     )
+    
+def cerrar_sesion(request):
+    logout(request)
+    return redirect('login')
 
+@never_cache
 @login_required    
 def inicio(request):
     return render(request, 'reservas/inicio.html')
 
+@never_cache
 @login_required
 def lista_reservas(request):
     reservas = Reserva.objects.all()
@@ -42,6 +49,7 @@ def lista_reservas(request):
         {'reservas': reservas}
     )
 
+@never_cache
 @login_required
 def crear_reserva(request):
     if request.method == 'POST':
@@ -59,6 +67,7 @@ def crear_reserva(request):
         {'form': form}
     )
 
+@never_cache
 @login_required
 def editar_reserva(request, id):
     reserva = get_object_or_404(Reserva, id=id)
@@ -78,6 +87,7 @@ def editar_reserva(request, id):
         {'form': form, 'reserva': reserva}
     )
 
+@never_cache
 @login_required
 def eliminar_reserva(request, id):
     reserva = get_object_or_404(Reserva, id=id)
